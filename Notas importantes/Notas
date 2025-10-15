@@ -1,0 +1,49 @@
+** Tipos de datos:
+
+Enteros:
+- byte
+- short
+- int
+- long
+
+Punto Flotante:
+
+- float
+- double
+
+Caracter:
+
+- char
+
+Bolean:
+
+** Relaciones entre clases
+
+Asociacion: Dos clases se conocen, pero no dependen una de la otra. (No contiene los atributos pero los usa).
+
+Agregacion: Una clase tiene a la otra, pero no la controla por completo. (Se puede quitar la clase sin que la principal deje de tener sentido).
+
+Composicion: Una clase crea, posee y controla completamenta a otra. (Si la clase principal desaparece, la clase contenida tambien deja de tener sentido).
+
+
+- boolean
+
+Datos No primitivos:
+
+- Clases
+- Interfaces
+- Arrays
+- Strings
+
+
+** Estructura
+ 1. Atributos
+ 2. Constructores
+ 3. Metodos de la clase
+ 4. Getter and Setter
+
+ Getter: Permite que se pueda obtener el valor, pero no modificar
+ Setter: Permite modificar el valor, descripcion o contenido.
+
+ Encapsulamiento: Permite definir clases que sean mas seguras y seamos nosotros que podemos hacer con esto.
+ Al crear clases atributos privados por defecto y usar getter y setter por defecto
