@@ -12,26 +12,36 @@ public class Plataforma {
     private List<Pelicula> contenido;
 
     //Constructor
-    public Plataforma (String nombre){
+    public Plataforma(String nombre) {
         this.nombre = nombre;
-        this.contenido = new ArrayList<>(); // Inicializar una lista // Agregación
+        this.contenido = new ArrayList<>();
     }
 
     //Metodos
     // Metodo Agregar
-    public void agregar(Pelicula elemento){ // void no retorna nada
+    public void agregar(Pelicula elemento) {
         this.contenido.add(elemento);
     }
 
-    public void mostrarTitulos(){
+    public void mostrarTitulos() {
         for (Pelicula pelicula : contenido) {
             System.out.println(pelicula.getTitulo());
         }
     }
 
     // Metodo Eliminar
-    public void elimiar(Pelicula elemento){
+    public void eliminar(Pelicula elemento) {
         this.contenido.remove(elemento);
+    }
+
+    public Pelicula buscarPorTitulo(String titulo) {
+        for (Pelicula pelicula : contenido) {
+            if (pelicula.getTitulo().equalsIgnoreCase(titulo)) {
+                return pelicula;
+            }
+        }
+
+        return null;
     }
 
 
