@@ -16,6 +16,7 @@ public class Main {
     public static final int MOSTRAR_TODO = 2;
     public static final int BUSCAR_POR_TITULO = 3;
     public static final int BUSCAR_POR_GENERO = 4;
+    public static final int VER_POPULARES = 5;
     public static final int ELIMINAR = 8;
     public static final int SALIR = 9;
 
@@ -24,6 +25,8 @@ public class Main {
         System.out.println(NOMBRE_PLATAFORMA + " v" + VERSION);
 
         cargarPeliculas(plataforma);
+
+        System.out.println("Mas de " + plataforma.getDuracionTotal() + " minutos de contenido! \n");
 
 
         // Menu
@@ -34,6 +37,7 @@ public class Main {
                     2. Mostrar todo
                     3. Buscar por titulo
                     4. Buscar por genero
+                    5. Ver populares
                     8. Eliminar
                     9. Salir
                     """);
@@ -42,13 +46,16 @@ public class Main {
             switch (opcionElegida) {
                 case AGREGAR -> {
                     String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
-                    String genero = ScannerUtils.capturarTexto("Genero del contenido");
-                    int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
-                    double calificacion = ScannerUtils.capturarDecimal("Calificacion del contenido");
+                    String genero = ScannerUtils.capturarTexto("Género del contenido");
+                    int duracion = ScannerUtils.capturarNumero("Duración del contenido");
+                    double calificacion = ScannerUtils.capturarDecimal("Calificación del contenido");
 
                     plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion));
                 }
-                case MOSTRAR_TODO -> plataforma.mostrarTitulos();
+                case MOSTRAR_TODO -> {
+                    List<String > titulos = plataforma.getTitulos();
+                    titulos.forEach(System.out::println);
+                }
                 case BUSCAR_POR_TITULO -> {
                     String nombreBuscado = ScannerUtils.capturarTexto("Nombre del contenido a buscar");
                     Pelicula contenido = plataforma.buscarPorTitulo(nombreBuscado);
@@ -60,11 +67,17 @@ public class Main {
                     }
                 }
                 case BUSCAR_POR_GENERO -> {
-                    String generoBuscado = ScannerUtils.capturarTexto("Genero del contenido a buscar");
+                    String generoBuscado = ScannerUtils.capturarTexto("Género del contenido a buscar");
 
                     List<Pelicula> contenidoPorGenero = plataforma.buscarPorGenero(generoBuscado);
-                    System.out.println(contenidoPorGenero.size() + " encontrados para el genero " + generoBuscado);
+                    System.out.println(contenidoPorGenero.size() + " encontrados para el género " + generoBuscado);
                     contenidoPorGenero.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica() + "\n"));
+                }
+                case VER_POPULARES -> {
+                    int cantidad = ScannerUtils.capturarNumero("Cantidad de resultados a mostrar ");
+
+                    List<Pelicula> contenidoPopulares = plataforma.getPopulares(cantidad);
+                    contenidoPopulares.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica() + "\n"));
                 }
                 case ELIMINAR -> {
                     String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a eliminar");
@@ -72,7 +85,7 @@ public class Main {
 
                     if (contenido != null) {
                         plataforma.eliminar(contenido);
-                        System.out.println(nombreAEliminar + " eliminado! âŒ");
+                        System.out.println(nombreAEliminar + " eliminado! ❌");
                     } else {
                         System.out.println(nombreAEliminar + " no existe dentro de " + plataforma.getNombre());
                     }
@@ -83,16 +96,16 @@ public class Main {
     }
 
     private static void cargarPeliculas(Plataforma plataforma) {
-        plataforma.agregar(new Pelicula("Shrek", 90, "Animada"));
-        plataforma.agregar(new Pelicula("Inception", 148, "Ciencia FicciÃ³n"));
-        plataforma.agregar(new Pelicula("Titanic", 195, "Drama", 4.6));
-        plataforma.agregar(new Pelicula("John Wick", 101, "AcciÃ³n"));
-        plataforma.agregar(new Pelicula("El Conjuro", 112, "Terror", 3.0));
-        plataforma.agregar(new Pelicula("Coco", 105, "Animada", 4.7));
-        plataforma.agregar(new Pelicula("Interstellar", 169, "Ciencia FicciÃ³n", 5));
-        plataforma.agregar(new Pelicula("Joker", 122, "Drama"));
-        plataforma.agregar(new Pelicula("Toy Story", 81, "Animada", 4.5));
-        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, "AcciÃ³n", 3.9));
+        plataforma.agregar(new Pelicula("🎬Shrek", 90, "Animada"));
+        plataforma.agregar(new Pelicula("🎬Inception", 148, "Ciencia Ficción"));
+        plataforma.agregar(new Pelicula("🎬Titanic", 195, "Drama", 4.6));
+        plataforma.agregar(new Pelicula("🎬John Wick", 101, "Acción"));
+        plataforma.agregar(new Pelicula("🎬El Conjuro", 112, "Terror", 3.0));
+        plataforma.agregar(new Pelicula("🎬Coco", 105, "Animada", 4.7));
+        plataforma.agregar(new Pelicula("🎬Interstellar", 169, "Ciencia Ficción", 5));
+        plataforma.agregar(new Pelicula("🎬Joker", 122, "Drama"));
+        plataforma.agregar(new Pelicula("🎬Toy Story", 81, "Animada", 4.5));
+        plataforma.agregar(new Pelicula("🎬Avengers: Endgame", 181, "Acción", 3.9));
     }
 
 
