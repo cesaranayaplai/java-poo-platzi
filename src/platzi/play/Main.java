@@ -4,6 +4,8 @@ import platzi.play.contenido.Pelicula;
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.ScannerUtils;
 
+import java.util.List;
+
 
 public class Main {
     public static final String NOMBRE_PLATAFORMA = "PLATZI PLAY 🍿";
@@ -13,8 +15,9 @@ public class Main {
     public static final int AGREGAR = 1;
     public static final int MOSTRAR_TODO = 2;
     public static final int BUSCAR_POR_TITULO = 3;
-    public static final int ELIMINAR = 4;
-    public static final int SALIR = 5;
+    public static final int BUSCAR_POR_GENERO = 4;
+    public static final int ELIMINAR = 8;
+    public static final int SALIR = 9;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
@@ -30,8 +33,9 @@ public class Main {
                     1. Agregar contenido
                     2. Mostrar todo
                     3. Buscar por titulo
-                    4. Eliminar
-                    5. Salir
+                    4. Buscar por genero
+                    8. Eliminar
+                    9. Salir
                     """);
 
             // Swicht Case
@@ -55,13 +59,20 @@ public class Main {
                         System.out.println(nombreBuscado + " no existe dentro de " + plataforma.getNombre());
                     }
                 }
+                case BUSCAR_POR_GENERO -> {
+                    String generoBuscado = ScannerUtils.capturarTexto("Genero del contenido a buscar");
+
+                    List<Pelicula> contenidoPorGenero = plataforma.buscarPorGenero(generoBuscado);
+                    System.out.println(contenidoPorGenero.size() + " encontrados para el genero " + generoBuscado);
+                    contenidoPorGenero.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica() + "\n"));
+                }
                 case ELIMINAR -> {
                     String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a eliminar");
                     Pelicula contenido = plataforma.buscarPorTitulo(nombreAEliminar);
 
                     if (contenido != null) {
                         plataforma.eliminar(contenido);
-                        System.out.println(nombreAEliminar + " eliminado! ❌");
+                        System.out.println(nombreAEliminar + " eliminado! âŒ");
                     } else {
                         System.out.println(nombreAEliminar + " no existe dentro de " + plataforma.getNombre());
                     }
