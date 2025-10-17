@@ -7,13 +7,13 @@ public class Pelicula {
     private String titulo;
     private String descripcion;
     private int duracion;
-    private String genero;
+    private Genero genero;
     private LocalDate fechaEstreno;
     private double calificacion;
     private boolean disponible;
 
     // Constructores
-    public Pelicula(String titulo, int duracion, String genero) {
+    public Pelicula(String titulo, int duracion, Genero genero) {
         this.titulo = titulo;
         this.duracion = duracion;
         this.genero = genero;
@@ -22,7 +22,7 @@ public class Pelicula {
     }
 
     // Metodos de la clase
-    public Pelicula(String titulo, int duracion, String genero, double calificacion) {
+    public Pelicula(String titulo, int duracion, Genero genero, double calificacion) {
         this(titulo, duracion, genero);
         this.calificar(calificacion);
     }
@@ -32,7 +32,7 @@ public class Pelicula {
     }
 
     public String obtenerFichaTecnica() {
-        return titulo + " (" + fechaEstreno.getYear() + ")\n" +
+        return "🎬" + titulo + " (" + fechaEstreno.getYear() + ")\n" +
                 "Género: " + genero + "\n" +
                 "Calificación: " + calificacion + "/5";
     }
@@ -64,7 +64,7 @@ public class Pelicula {
         return fechaEstreno;
     }
 
-    public String getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
