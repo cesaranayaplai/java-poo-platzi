@@ -2,6 +2,7 @@ package platzi.play;
 
 import platzi.play.contenido.Genero;
 import platzi.play.contenido.Pelicula;
+import platzi.play.excepcion.PeliculaExistenteException;
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.ScannerUtils;
 
@@ -9,10 +10,9 @@ import java.util.List;
 
 
 public class Main {
-    public static final String NOMBRE_PLATAFORMA = "PLATZI PLAY 🍿";
+    public static final String NOMBRE_PLATAFORMA = "PLATZI PLAY ðŸ¿";
     public static final String VERSION = "1.0.0";
 
-    // Declaracion de constantes para menu
     public static final int AGREGAR = 1;
     public static final int MOSTRAR_TODO = 2;
     public static final int BUSCAR_POR_TITULO = 3;
@@ -27,10 +27,8 @@ public class Main {
 
         cargarPeliculas(plataforma);
 
-        System.out.println("Mas de " + plataforma.getDuracionTotal() + " minutos de contenido! \n");
+        System.out.println("MÃ¡s de " + plataforma.getDuracionTotal() + " minutos de contenido! \n");
 
-
-        // Menu
         while (true) {
             int opcionElegida = ScannerUtils.capturarNumero("""
                     Ingrese una de las siguientes opciones:
@@ -43,18 +41,21 @@ public class Main {
                     9. Salir
                     """);
 
-            // Swicht Case
             switch (opcionElegida) {
                 case AGREGAR -> {
                     String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
-                    Genero genero = ScannerUtils.capturarGenero("Género del contenido");
-                    int duracion = ScannerUtils.capturarNumero("Duración del contenido");
-                    double calificacion = ScannerUtils.capturarDecimal("Calificación del contenido");
+                    Genero genero = ScannerUtils.capturarGenero("Genero del contenido");
+                    int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
+                    double calificacion = ScannerUtils.capturarDecimal("Calificacion del contenido");
 
-                    plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion));
+                    try {
+                        plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion));
+                    } catch (PeliculaExistenteException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 case MOSTRAR_TODO -> {
-                    List<String > titulos = plataforma.getTitulos();
+                    List<String> titulos = plataforma.getTitulos();
                     titulos.forEach(System.out::println);
                 }
                 case BUSCAR_POR_TITULO -> {
@@ -68,14 +69,14 @@ public class Main {
                     }
                 }
                 case BUSCAR_POR_GENERO -> {
-                    Genero generoBuscado = ScannerUtils.capturarGenero("Género del contenido a buscar");
+                    Genero generoBuscado = ScannerUtils.capturarGenero("Genero del contenido a buscar");
 
                     List<Pelicula> contenidoPorGenero = plataforma.buscarPorGenero(generoBuscado);
-                    System.out.println(contenidoPorGenero.size() + " encontrados para el género " + generoBuscado);
+                    System.out.println(contenidoPorGenero.size() + " encontrados para el genero " + generoBuscado);
                     contenidoPorGenero.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica() + "\n"));
                 }
                 case VER_POPULARES -> {
-                    int cantidad = ScannerUtils.capturarNumero("Cantidad de resultados a mostrar ");
+                    int cantidad = ScannerUtils.capturarNumero("Cantidad de resultados a mostrar");
 
                     List<Pelicula> contenidoPopulares = plataforma.getPopulares(cantidad);
                     contenidoPopulares.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica() + "\n"));
@@ -86,7 +87,7 @@ public class Main {
 
                     if (contenido != null) {
                         plataforma.eliminar(contenido);
-                        System.out.println(nombreAEliminar + " eliminado! ❌");
+                        System.out.println(nombreAEliminar + " eliminado! âŒ");
                     } else {
                         System.out.println(nombreAEliminar + " no existe dentro de " + plataforma.getNombre());
                     }
@@ -97,17 +98,15 @@ public class Main {
     }
 
     private static void cargarPeliculas(Plataforma plataforma) {
-        plataforma.agregar(new Pelicula("🎬Shrek", 90, Genero.ANIMADA));
-        plataforma.agregar(new Pelicula("🎬Inception", 148, Genero.CIENCIA_FICCION));
-        plataforma.agregar(new Pelicula("🎬Titanic", 195, Genero.DRAMA, 4.6));
-        plataforma.agregar(new Pelicula("🎬John Wick", 101, Genero.ACCION));
-        plataforma.agregar(new Pelicula("🎬El Conjuro", 112, Genero.TERROR, 3.0));
-        plataforma.agregar(new Pelicula("🎬Coco", 105, Genero.ANIMADA, 4.7));
-        plataforma.agregar(new Pelicula("🎬Interstellar", 169, Genero.CIENCIA_FICCION, 5));
-        plataforma.agregar(new Pelicula("🎬Joker", 122, Genero.DRAMA));
-        plataforma.agregar(new Pelicula("🎬Toy Story", 81, Genero.ANIMADA, 4.5));
-        plataforma.agregar(new Pelicula("🎬Avengers: Endgame", 181, Genero.ACCION, 3.9));
+        plataforma.agregar(new Pelicula("Shrek", 90, Genero.ANIMADA));
+        plataforma.agregar(new Pelicula("Inception", 148, Genero.CIENCIA_FICCION));
+        plataforma.agregar(new Pelicula("Titanic", 195, Genero.DRAMA, 4.6));
+        plataforma.agregar(new Pelicula("John Wick", 101, Genero.ACCION));
+        plataforma.agregar(new Pelicula("El Conjuro", 112, Genero.TERROR, 3.0));
+        plataforma.agregar(new Pelicula("Coco", 105, Genero.ANIMADA, 4.7));
+        plataforma.agregar(new Pelicula("Interstellar", 169, Genero.CIENCIA_FICCION, 5));
+        plataforma.agregar(new Pelicula("Joker", 122, Genero.DRAMA));
+        plataforma.agregar(new Pelicula("Toy Story", 81, Genero.ANIMADA, 4.5));
+        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, Genero.ACCION, 3.9));
     }
-
-
 }
