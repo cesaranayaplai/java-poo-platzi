@@ -3,7 +3,7 @@ package platzi.play.contenido;
 import java.time.LocalDate;
 
 // Atributos
-public class Contenido {
+public abstract class Contenido {
     private String titulo;
     private String descripcion;
     private int duracion;
@@ -12,7 +12,6 @@ public class Contenido {
     private double calificacion;
     private boolean disponible;
 
-    // Constructores
     public Contenido(String titulo, int duracion, Genero genero) {
         this.titulo = titulo;
         this.duracion = duracion;
@@ -21,18 +20,15 @@ public class Contenido {
         this.disponible = true;
     }
 
-    // Metodos de la clase
     public Contenido(String titulo, int duracion, Genero genero, double calificacion) {
         this(titulo, duracion, genero);
         this.calificar(calificacion);
     }
 
-    public void reproducir() {
-        System.out.println("Reproduciendo " + titulo);
-    }
+    public abstract void reproducir();
 
     public String obtenerFichaTecnica() {
-        return "🎬" + titulo + " (" + fechaEstreno.getYear() + ")\n" +
+        return "🎉" + titulo + " (" + fechaEstreno.getYear() + ")\n" +
                 "Género: " + genero + "\n" +
                 "Calificación: " + calificacion + "/5";
     }
@@ -47,9 +43,12 @@ public class Contenido {
         return calificacion >= 4;
     }
 
-    // Getter
     public String getTitulo() {
         return titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
     }
 
     public boolean isDisponible() {
@@ -72,12 +71,6 @@ public class Contenido {
         return duracion;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-
-    // Setter
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }

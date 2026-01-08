@@ -5,9 +5,9 @@ import platzi.play.contenido.Contenido;
 import java.time.LocalDateTime;
 
 public class Usuario {
-    public String nombre;
-    public String email;
-    public LocalDateTime fechaRegistro;
+    private String nombre;
+    private String email;
+    private LocalDateTime fechaRegistro;
 
     public Usuario(String nombre, String email) {
         this.nombre = nombre;
@@ -16,7 +16,23 @@ public class Usuario {
     }
 
     public void ver(Contenido contenido) {
-        System.out.println(nombre + " estÃ¡ viendo...");
+        System.out.println(nombre + " está viendo...");
         contenido.reproducir();
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public LocalDateTime getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

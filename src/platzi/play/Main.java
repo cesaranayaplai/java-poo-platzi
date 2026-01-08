@@ -1,6 +1,10 @@
 package platzi.play;
 
-import platzi.play.contenido.*;
+import platzi.play.contenido.Documental;
+import platzi.play.contenido.Genero;
+import platzi.play.contenido.Contenido;
+import platzi.play.contenido.Pelicula;
+import platzi.play.contenido.ResumenContenido;
 import platzi.play.excepcion.PeliculaExistenteException;
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.FileUtils;
@@ -9,7 +13,7 @@ import platzi.play.util.ScannerUtils;
 import java.util.List;
 
 public class Main {
-    public static final String NOMBRE_PLATAFORMA = "PLATZI PLAY ðŸ¿";
+    public static final String NOMBRE_PLATAFORMA = "PLATZI PLAY 🍿🍿🎬🎬";
     public static final String VERSION = "1.0.0";
 
     public static final int AGREGAR = 1;
@@ -28,7 +32,8 @@ public class Main {
 
         cargarPeliculas(plataforma);
 
-        System.out.println("MÃ¡s de " + plataforma.getDuracionTotal() + " minutos de contenido! \n");
+        System.out.println("🎬 Más de " + plataforma.getDuracionTotal() + " minutos de contenido! \n");
+        plataforma.getContenidoPromocionable().forEach(promocionable -> System.out.println(promocionable.promocionar()));
 
         while (true) {
             int opcionElegida = ScannerUtils.capturarNumero("""
@@ -36,7 +41,7 @@ public class Main {
                     1. Agregar contenido
                     2. Mostrar todo
                     3. Buscar por titulo
-                    4. Buscar por genero
+                    4. Buscar por género
                     5. Ver populares
                     6. Reproducir
                     7. Buscar por tipo de contenido
@@ -46,20 +51,19 @@ public class Main {
 
             switch (opcionElegida) {
                 case AGREGAR -> {
-                    int tipoDeContenido = ScannerUtils.capturarNumero("Que tipo de contenido quieres agregar? \n1. Pelicula\n2. Documental \n");
+                    int tipoDeContenido = ScannerUtils.capturarNumero("¿Qué tipo de contenido quieres agregar?\n 1. Pelicula \n 2. Documental");
                     String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
-                    Genero genero = ScannerUtils.capturarGenero("Genero del contenido");
-                    int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
-                    double calificacion = ScannerUtils.capturarDecimal("Calificacion del contenido");
+                    Genero genero = ScannerUtils.capturarGenero("Género del contenido");
+                    int duracion = ScannerUtils.capturarNumero("Duración del contenido");
+                    double calificacion = ScannerUtils.capturarDecimal("Calificación del contenido");
 
                     try {
-                        if (tipoDeContenido == 1){
+                        if (tipoDeContenido == 1) {
                             plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion));
-                        }else {
+                        } else {
                             String narrador = ScannerUtils.capturarTexto("Narrador del documental");
                             plataforma.agregar(new Documental(nombre, duracion, genero, calificacion, narrador));
                         }
-
                     } catch (PeliculaExistenteException e) {
                         System.out.println(e.getMessage());
                     }
@@ -79,10 +83,10 @@ public class Main {
                     }
                 }
                 case BUSCAR_POR_GENERO -> {
-                    Genero generoBuscado = ScannerUtils.capturarGenero("Genero del contenido a buscar");
+                    Genero generoBuscado = ScannerUtils.capturarGenero("Género del contenido a buscar");
 
                     List<Contenido> contenidoPorGenero = plataforma.buscarPorGenero(generoBuscado);
-                    System.out.println(contenidoPorGenero.size() + " encontrados para el genero " + generoBuscado);
+                    System.out.println(contenidoPorGenero.size() + " encontrados para el género " + generoBuscado);
                     contenidoPorGenero.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica() + "\n"));
                 }
                 case VER_POPULARES -> {
@@ -102,14 +106,14 @@ public class Main {
                     }
                 }
                 case BUSCAR_POR_TIPO -> {
-                    int tipoDeContenido = ScannerUtils.capturarNumero("Que tipo de contenido quieres agregar? \n1. Pelicula\n2. Documental \n");
+                    int tipoDeContenido = ScannerUtils.capturarNumero("Que tipo de contenido quieres agregar?\n 1. Pelicula \n 2. Documental");
 
-                    if (tipoDeContenido == 1){
+                    if (tipoDeContenido == 1) {
                         List<Pelicula> peliculas = plataforma.getPeliculas();
                         peliculas.forEach(pelicula -> System.out.println(pelicula.obtenerFichaTecnica() + "\n"));
-                    }else {
+                    } else {
                         List<Documental> documentales = plataforma.getDocumentales();
-                        documentales.forEach(pelicula -> System.out.println(pelicula.obtenerFichaTecnica() + "\n"));
+                        documentales.forEach(documental -> System.out.println(documental.obtenerFichaTecnica() + "\n"));
                     }
                 }
                 case ELIMINAR -> {
@@ -118,7 +122,7 @@ public class Main {
 
                     if (contenido != null) {
                         plataforma.eliminar(contenido);
-                        System.out.println(nombreAEliminar + " eliminado! âŒ");
+                        System.out.println(nombreAEliminar + " eliminado! ❌");
                     } else {
                         System.out.println(nombreAEliminar + " no existe dentro de " + plataforma.getNombre());
                     }

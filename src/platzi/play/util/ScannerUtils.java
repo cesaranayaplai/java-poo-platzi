@@ -38,21 +38,19 @@ public class ScannerUtils {
         return dato;
     }
 
-    public static Genero capturarGenero(String mensaje){
-        while (true){
-
-            System.out.println(mensaje + " ...Opciones:");
+    public static Genero capturarGenero(String mensaje) {
+        while (true) {
+            System.out.println(mensaje + "... Opciones:");
             for (Genero genero : Genero.values()) {
                 System.out.println("-" + genero.name());
             }
 
-            System.out.println("¿Cúal quieres?" + "\n");
-
+            System.out.println("Cual quieres?");
             String entrada = SCANNER.nextLine();
 
             try {
                 return Genero.valueOf(entrada.toUpperCase());
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.println("Género no aceptado. ");
             }
         }
